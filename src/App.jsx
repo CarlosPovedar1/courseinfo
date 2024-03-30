@@ -1,25 +1,28 @@
 const Header= (props)=>{
-    
+   
     return <h1>{props.course}</h1>
 }
-const Part = (props)=>{
-  return <p>
-    {props.part} {props.exercise}
-  </p>
-  
-}
-const Content = (props)=>{
-  return<div>
-    <Part part = {props.part1} exercise = {props.exercise1} />
-    <Part part = {props.part2} exercise = {props.exercise2} />
-    <Part part = {props.part3} exercise = {props.exercise3} />
-   </div> 
-  
-  
-}
-const Total = (props)=> {
-  return<p>Number of exercises {props.exercise1+props.exercise2+props.exercise3}</p>
 
+const Content = (props)=>{
+  const z = props.parts
+
+  return(<div>
+    {z.map((part,index)=>(
+      <p key ={index}> 
+      {part.name}: {part.exercises}</p>
+    ))}
+  </div>)
+ 
+}
+
+const Total = (props)=> {
+  let total = 0;
+  const t = props.parts
+  t.forEach(value =>{
+
+    total += value.exercises
+  })
+  return <p>Number of exercises {total}</p>
 }
 
 
@@ -45,12 +48,8 @@ function App() {
   return (
     <div>
       <Header course ={course}/>
-      <Content
-        part1 ={parts[0].name} exercise1= {parts[0].exercises}
-        part2 ={parts[1].name} exercise2= {parts[1].exercises}
-        part3 ={parts[2].name} exercise3= {parts[2].exercises}
-      />
-      <Total exercise1={parts[0].exercises} exercise2={parts[1].exercises} exercise3={parts[2].exercises}/>
+      <Content parts ={parts}/>
+      <Total parts ={parts} />
       
     </div>
   )
